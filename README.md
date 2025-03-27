@@ -10,7 +10,7 @@ This is a modern, responsive e-commerce application built using **React** for th
 - **Order Management**: Checkout process with order summary.
 - **Real-time Database**: Use of Firebase Firestore for storing user and order data.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
-- **Hosting**: Deployed on Netlify Hosting for reliable and fast performance.
+- **Hosting**: Deployed on IBM CLOUD.
 
 ## Tech Stack
 
