@@ -4,32 +4,27 @@ import { useSelector } from "react-redux";
 
 
 const Navbar = () => {
-    // get user from localStorage 
     const user = JSON.parse(localStorage.getItem('users'));
 
-    // navigate 
     const navigate = useNavigate();
 
-    // logout function 
     const logout = () => {
         localStorage.clear('users');
         navigate("/login")
     }
 
-    // CartItems
     const cartItems = useSelector((state) => state.cart);
 
-    // navList Data
     const navList = (
         <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
-            {/* Home */}
+            {}
             <li>
                 <Link to={'/'}>Home</Link>
             </li>
 
-            {/* All Product */}
+            {}
             <li>
-                <Link to={'/allproduct'}>All Product</Link>
+                <Link to={'/allproduct'}>Listed Product</Link>
             </li>
 
             {/* Signup */}
@@ -72,7 +67,7 @@ const Navbar = () => {
                 {/* left  */}
                 <div className="left py-3 lg:py-0">
                     <Link to={'/'}>
-                        <h2 className=" font-bold text-white text-2xl text-center">E-Bharat</h2>
+                        <h2 className=" font-bold text-white text-2xl text-center">CLOUD-STORE</h2>
                     </Link>
                 </div>
 

@@ -4,13 +4,35 @@ import myContext from "../../context/myContext";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
+import useMyStore from "../../context/myContext2";
+import { fireDB } from "../../firebase/FirebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 
 const HomePageProductCard = () => {
     const navigate = useNavigate();
 
-    const context = useContext(myContext);
+    // const context = useContext(myContext);
+    const context = useMyStore();
+    console.log('store: ', context);
     const { getAllProduct } = context;
+
+    async function fetchProducts() {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        querySnapshot.forEach((doc) => {
+            console.log("Firestore Data:", doc.id, "=>", doc.data());
+        });
+    }
+    
+    fetchProducts();
+
+
+    useEffect(() => {
+        console.log('useEffect called');
+        context.getAllProductFunction();
+    }, []);
+
+    console.log('getAllProduct consumer: ', getAllProduct);
 
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
@@ -35,12 +57,12 @@ const HomePageProductCard = () => {
 
     return (
         <div className="mt-10">
-            {/* Heading  */}
+            {}
             <div className="">
-                <h1 className=" text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
+                <h1 className=" text-center mb-5 text-2xl font-semibold">Our Best-Selling Products</h1>
             </div>
 
-            {/* main  */}
+            {}
             <section className="text-gray-600 body-font">
                 <div className="container px-5 py-5 mx-auto">
                     <div className="flex flex-wrap -m-4">
@@ -57,7 +79,7 @@ const HomePageProductCard = () => {
                                         />
                                         <div className="p-6">
                                             <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                                E-bharat
+                                                Cloud-Store
                                             </h2>
                                             <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                                                 {title.substring(0, 25)}
@@ -85,7 +107,7 @@ const HomePageProductCard = () => {
                                                     Add To Cart
                                                 </button>
                                             }
-                                            </div> */}
+                                            <{/div> */}
                                             {cartItems?.some((p) => p.id === item.id) ? (
                                                     <button
                                                         onClick={() => deleteCart(item)}

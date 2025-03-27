@@ -2,18 +2,20 @@ import { useContext } from "react";
 import myContext from "../../context/myContext";
 
 const OrderDetail = () => {
-    const context = useContext(myContext);
+   // const context = useContext(myContext);
+   const context = useMyStore();
+const { orderDetail } = context;
     const { getAllOrder, deleteProduct } = context;
     // console.log(getAllOrder)
     return (
         <div>
             <div>
                 <div className="py-5">
-                    {/* text  */}
+                    {}
                     <h1 className=" text-xl text-pink-300 font-bold">All Order</h1>
                 </div>
 
-                {/* table  */}
+                {}
                 <div className="w-full overflow-x-auto">
                     <table className="w-full text-left border border-collapse sm:border-separate border-pink-100 text-pink-400" >
                         <tbody>

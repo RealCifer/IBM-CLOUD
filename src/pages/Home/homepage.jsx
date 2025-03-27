@@ -7,21 +7,24 @@ import Testimonial from "../../Components/testimonial/Testimonial";
 import Track from "../../Components/track/Track";
 import myContext from "../../context/myContext";
 import CartPage from "../cart/CartPage";
+import MyState from "../../context/myState";
 
 
 
 export default function homepage() {
  
   return (
-    <Layout>
-      
-      <HeroSection/>
-      <Category/>
-      <HomePageProductCard/>
-      <Track/>
-      <Testimonial/>
-      {/* <CartPage/> */}
-      
-    </Layout>
+    // <MyState>
+      <Layout>
+        
+        <HeroSection/>
+        <Category/>
+        <HomePageProductCard/>
+        <Track/>
+        <Testimonial/>
+        {/* <CartPage/> */}
+        
+      </Layout>
+    // </MyState>
   );
 }

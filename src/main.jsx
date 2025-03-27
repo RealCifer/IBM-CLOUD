@@ -9,11 +9,11 @@ import { Provider } from 'react-redux';
 // render(<App />, document.getElementById('app'))
 
 ReactDOM.createRoot(document.getElementById("app")).render(
-      <React.StrictMode>
+    // <React.StrictMode>
       <Provider store={store}>
         <ThemeProvider>
           <App />
         </ThemeProvider>
       </Provider>
-    </React.StrictMode>
+    // </React.StrictMode>
   );

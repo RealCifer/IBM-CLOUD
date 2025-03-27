@@ -1,22 +1,29 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getFirestore} from "firebase/firestore";
-import { getAuth } from 'firebase/auth';
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
 
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDmARLVaEgwfzMIVe8J3KpGcquKa3GmZbM",
-  authDomain: "myecom-e1186.firebaseapp.com",
-  projectId: "myecom-e1186",
-  storageBucket: "myecom-e1186.firebasestorage.app",
-  messagingSenderId: "378290225180",
-  appId: "1:378290225180:web:b40f7f8ef0e9daec97dfd9"
+  apiKey: "AIzaSyAfpsSU9VlGcZcrzcDU5Q0bHg_Lla5gJeY",
+  authDomain: "cloud-project-95dc1.firebaseapp.com",
+  projectId: "cloud-project-95dc1",
+  storageBucket: "cloud-project-95dc1.appspot.com",
+  messagingSenderId: "730069642801",
+  appId: "1:730069642801:web:28be926519e2fb2601af10",
+  measurementId: "G-7PSQTP9HLK"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-const fireDB = getFirestore(app);
-const auth = getAuth(app);
+// Ensure analytics runs only in the browser
+let analytics;
+if (typeof window !== "undefined") {
+  analytics = getAnalytics(app);
+}
 
-export { fireDB, auth }
+export default app;
+
+export let fireDB = getFirestore(app);
+export let auth = getAuth(app);

@@ -17,7 +17,6 @@ This is a modern, responsive e-commerce application built using **React** for th
 - **Frontend**: React, React Router, Context API
 - **Backend Services**: Firebase Authentication, Firebase Firestore
 - **Styling**: CSS, tailwind css
-- **Deployment**: Netlify Hosting
 
 ## Installation
 
@@ -25,7 +24,7 @@ Follow the steps below to get a local copy up and running:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AdityaJyoti2002/React-And-Firebase-Ecommerce.git
+   git clone https://github.com/RealCifer/IBM-CLOUD.git
    ```
 
 2. Navigate to the project directory:
@@ -83,9 +82,6 @@ React-And-Firebase-Ecommerce/
 
 Ensure you have Firebase CLI installed and configured with your Firebase project.
 
-### Demo Video
-
-[![App Demo Video](https://img.youtube.com/vi/your-video-id/hqdefault.jpg)](https://github.com/AdityaJyoti2002/React-And-Firebase-Ecommerce/blob/52da618d13c20d68dc9ac7c3a488e03c1fa70471/1733912233083898%20(1).mp4)
 
 ## Contribution
 
@@ -97,10 +93,3 @@ Contributions are welcome! To contribute:
 4. Push to the branch (`git push origin feature/your-feature-name`).
 5. Open a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-Feel free to customize this README as per your project’s specific requirements!

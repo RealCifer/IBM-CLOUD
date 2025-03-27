@@ -19,9 +19,7 @@ const Signup = () => {
         password: "",
         role: "user"
     });
-     /**========================================================================
-      *               User Signup Function
-    *========================================================================**/
+
      const userSignupFunction = async () => {
         // validation 
         if (userSignup.name === "" || userSignup.email === "" || userSignup.password === "") {
