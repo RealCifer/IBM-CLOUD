@@ -29,7 +29,7 @@ Follow the steps below to get a local copy up and running:
 
 2. Navigate to the project directory:
    ```bash
-   cd React-And-Firebase-Ecommerce
+   cd IBM-CLOUD
    ```
 
 3. Install dependencies:
