@@ -1,4 +1,4 @@
-# React and Firebase E-commerce Project
+# React and Firebase E-Commerce Website For Cloud Platform
 
 This is a modern, responsive e-commerce application built using **React** for the frontend and **Firebase** for backend services like authentication, database, and hosting. The project demonstrates seamless integration between a React-based UI and Firebase functionalities to deliver an engaging shopping experience.
 
