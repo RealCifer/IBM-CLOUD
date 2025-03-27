@@ -74,8 +74,12 @@ React-And-Firebase-Ecommerce/
    ```bash
    npm run build
    ```
-
-2. Deploy to Firebase Hosting:
+2. How to Run the project:
+   ```bash
+   npm run dev
+   ```
+   
+3. Deploy to Firebase Hosting:
    ```bash
    firebase deploy
    ```
