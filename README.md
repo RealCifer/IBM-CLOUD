@@ -1,4 +1,4 @@
-# React and Firebase E-commerce Project
+# React and Firebase E-Commerce Website For Cloud Platform
 
 This is a modern, responsive e-commerce application built using **React** for the frontend and **Firebase** for backend services like authentication, database, and hosting. The project demonstrates seamless integration between a React-based UI and Firebase functionalities to deliver an engaging shopping experience.
 
@@ -10,7 +10,7 @@ This is a modern, responsive e-commerce application built using **React** for th
 - **Order Management**: Checkout process with order summary.
 - **Real-time Database**: Use of Firebase Firestore for storing user and order data.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
-- **Hosting**: Deployed on Netlify Hosting for reliable and fast performance.
+- **Hosting**: Deployed on IBM CLOUD.
 
 ## Tech Stack
 
@@ -29,7 +29,7 @@ Follow the steps below to get a local copy up and running:
 
 2. Navigate to the project directory:
    ```bash
-   cd React-And-Firebase-Ecommerce
+   cd IBM-CLOUD
    ```
 
 3. Install dependencies:
@@ -74,8 +74,12 @@ React-And-Firebase-Ecommerce/
    ```bash
    npm run build
    ```
-
-2. Deploy to Firebase Hosting:
+2. How to Run the project:
+   ```bash
+   npm run dev
+   ```
+   
+3. Deploy to Firebase Hosting:
    ```bash
    firebase deploy
    ```
