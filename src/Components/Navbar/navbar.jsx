@@ -31,6 +31,9 @@ const Navbar = () => {
             {!user ? <li>
                 <Link to={'/signup'}>Signup</Link>
             </li> : ""}
+            {!user ? <li>
+                <Link to={'/admin'}>Admin Dashboard</Link>
+            </li> : ""}
 
             {/* Signup */}
             {!user ? <li>

@@ -21,6 +21,7 @@ import { Toaster } from "react-hot-toast";
 import { ProtectedRouteForUser } from "./protectedRoute/ProtectedRouteForUser";
 import { ProtectedRouteForAdmin } from "./protectedRoute/ProtectedRouteForAdmin";
 import CategoryPage from "./pages/category/CategoryPage";
+import Admin from "./pages/Admin";
 
 export function App() {
   return (
@@ -29,6 +30,7 @@ export function App() {
       <ScrollTop/>
       <Routes>
         <Route path="/" element={<Homepage/>}/>
+        <Route path='/admin' element={<Admin/>}/>
         <Route path="/*" element={<Nopage/>}/>
         <Route path="/productinfo/:id" element={<ProductInfo/>}/>
         <Route path="/cart" element={<CartPage />} />
