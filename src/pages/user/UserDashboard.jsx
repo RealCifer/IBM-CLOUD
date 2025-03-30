@@ -8,7 +8,7 @@ const UserDashboard = () => {
     const user = JSON.parse(localStorage.getItem('users'));
 
     const context = useContext(myContext);
-    const { loading, getAllOrder } = context
+    const { loading, getAllOrder } = contextx
     // console.log(getAllOrder)
 
     // console.log(user)

@@ -2,84 +2,64 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../searchBar/SearchBar";
 import { useSelector } from "react-redux";
 
-
 const Navbar = () => {
     const user = JSON.parse(localStorage.getItem('users'));
-
     const navigate = useNavigate();
 
     const logout = () => {
         localStorage.clear('users');
-        navigate("/login")
+        navigate("/login");
     }
 
     const cartItems = useSelector((state) => state.cart);
 
     const navList = (
-        <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
-            {}
+        <ul className="flex space-x-3 text-black font-medium text-md px-5">
             <li>
                 <Link to={'/'}>Home</Link>
             </li>
-
-            {}
             <li>
                 <Link to={'/allproduct'}>Listed Product</Link>
             </li>
-
-            {/* Signup */}
-            {!user ? <li>
+            {!user && <li>
                 <Link to={'/signup'}>Signup</Link>
-            </li> : ""}
-            {!user ? <li>
+            </li>}
+            {!user && <li>
                 <Link to={'/admin'}>Admin Dashboard</Link>
-            </li> : ""}
-
-            {/* Signup */}
-            {!user ? <li>
+            </li>}
+            {!user && <li>
                 <Link to={'/login'}>Login</Link>
-            </li> : ""}
-
-            {/* User */}
+            </li>}
             {user?.role === "user" && <li>
                 <Link to={'/user-dashboard'}>User</Link>
             </li>}
-
-            {/* Admin */}
             {user?.role === "admin" && <li>
                 <Link to={'/admin-dashboard'}>Admin</Link>
             </li>}
-
-            {/* logout */}
-            {user && <li className=" cursor-pointer" onClick={logout}>
-                logout
+            {user && <li className="cursor-pointer" onClick={logout}>
+                Logout
             </li>}
-
-            {/* Cart */}
             <li>
                 <Link to={'/cart'}>
                     Cart({cartItems.length})
                 </Link>
             </li>
         </ul>
-    )
+    );
+
     return (
-        <nav className="bg-pink-600 sticky top-0">
-            {/* main  */}
-            <div className="lg:flex lg:justify-between items-center py-3 lg:px-3 ">
-                {/* left  */}
+        <nav className="bg-yellow-400 sticky top-0">
+            <div className="lg:flex lg:justify-between items-center py-3 lg:px-3">
                 <div className="left py-3 lg:py-0">
                     <Link to={'/'}>
-                        <h2 className=" font-bold text-white text-2xl text-center">CLOUD-STORE</h2>
+                        <h2 className="font-bold text-black text-2xl text-center font-[Pacifico]">
+                            CLOUD-STORE
+                        </h2>
                     </Link>
                 </div>
-
-                {/* right  */}
                 <div className="right flex justify-center mb-4 lg:mb-0">
                     {navList}
                 </div>
-
-                {/* Search Bar  */}
                 <SearchBar />
             </div>
         </nav>
