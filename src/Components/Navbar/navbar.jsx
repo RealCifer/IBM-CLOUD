@@ -25,7 +25,7 @@ const Navbar = () => {
                 <Link to={'/signup'}>Signup</Link>
             </li>}
             {!user && <li>
-                <Link to={'/admin'}>Admin Dashboard</Link>
+                <Link to={'/admin'}>Admin</Link>
             </li>}
             {!user && <li>
                 <Link to={'/login'}>Login</Link>

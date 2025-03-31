@@ -1,139 +1,100 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import myContext from "../../context/myContext";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import useMyStore from "../../context/myContext2";
-import { fireDB } from "../../firebase/FirebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
-
 
 const HomePageProductCard = () => {
     const navigate = useNavigate();
-
-    // const context = useContext(myContext);
     const context = useMyStore();
-    console.log('store: ', context);
     const { getAllProduct } = context;
 
-    async function fetchProducts() {
-        const querySnapshot = await getDocs(collection(db, "products"));
-        querySnapshot.forEach((doc) => {
-            console.log("Firestore Data:", doc.id, "=>", doc.data());
-        });
-    }
-    
-    fetchProducts();
-
-
     useEffect(() => {
-        console.log('useEffect called');
         context.getAllProductFunction();
     }, []);
-
-    console.log('getAllProduct consumer: ', getAllProduct);
 
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const addCart = (item) => {
-        // console.log(item)
         dispatch(addToCart(item));
-        toast.success("Add to cart")
-    }
+        toast.success("Added to cart!");
+    };
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
-        toast.success("Delete cart")
-    }
-
-    // console.log(cartItems)
-
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-    }, [cartItems])
-
+        toast.success("Removed from cart!");
+    };
 
     return (
-        <div className="mt-10">
-            {}
-            <div className="">
-                <h1 className=" text-center mb-5 text-2xl font-semibold">Our Best-Selling Products</h1>
-            </div>
+        <div className="mt-24 px-5 relative"> {/* Increased top margin for better spacing */}
+            {/* Fancy Title with More Space */}
+            <h1 className="text-center mb-5 pb-4 font-extrabold text-4xl bg-gradient-to-r from-blue-500 to-purple-600 
+                           text-transparent bg-clip-text">
+                ✨ Our Best-Selling Products ✨
+            </h1>
 
-            {}
             <section className="text-gray-600 body-font">
-                <div className="container px-5 py-5 mx-auto">
-                    <div className="flex flex-wrap -m-4">
+                <div className="container mx-auto px-5 py-5">
+                    <div className="flex flex-wrap justify-center -m-4">
                         {getAllProduct.slice(0, 8).map((item, index) => {
-                            const { id, title, price, productImageUrl } = item
+                            const { id, title, price, productImageUrl } = item;
                             return (
                                 <div key={index} className="p-4 w-full md:w-1/4">
-                                    <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                    <div className="h-full bg-gray-100 border border-gray-300 rounded-xl overflow-hidden 
+                                                    shadow-lg cursor-pointer transition-transform duration-300 ease-in-out 
+                                                    hover:scale-105 hover:shadow-2xl hover:rotate-1">
                                         <img
                                             onClick={() => navigate(`/productinfo/${id}`)}
-                                            className="lg:h-80  h-96 w-full"
+                                            className="lg:h-80 h-96 w-full object-cover transform transition-transform duration-300 hover:scale-110"
                                             src={productImageUrl}
-                                            alt="blog"
+                                            alt={title}
                                         />
                                         <div className="p-6">
-                                            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                                            <h2 className="tracking-widest text-xs font-medium text-gray-500 uppercase">
                                                 Cloud-Store
                                             </h2>
-                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                                            
+                                            {/* Fancy Product Title */}
+                                            <h1 className="text-xl font-serif italic font-semibold text-gray-800 mt-2 shadow-sm">
                                                 {title.substring(0, 25)}
                                             </h1>
-                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                                                ₹{price}
-                                            </h1>
+                                            
+                                            <p className="text-gray-600 mt-1 text-lg font-bold">₹{price}</p>
 
-                                            {/* <div
-                                                className="flex justify-center ">
-                                                {cartItems?.some((p)=> p.id === item.id) 
-                                                
-                                                ?
-                                                <button
-                                                    onClick={() => deleteCart(item)}
-                                                    className=" bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                    Delete To Cart
-                                                </button>
-
-                                                : 
-
-                                                <button
-                                                    onClick={() => addCart(item)}
-                                                    className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                    Add To Cart
-                                                </button>
-                                            }
-                                            <{/div> */}
-                                            {cartItems?.some((p) => p.id === item.id) ? (
+                                            {/* Add/Remove Cart Button */}
+                                            <div className="flex justify-center mt-3">
+                                                {cartItems?.some((p) => p.id === item.id) ? (
                                                     <button
                                                         onClick={() => deleteCart(item)}
-                                                        className="bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold"
+                                                        className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 
+                                                                   rounded-lg font-bold transition-all duration-300 
+                                                                   transform hover:scale-105 shadow-md"
                                                     >
-                                                        Delete From Cart
+                                                        Remove From Cart
                                                     </button>
                                                 ) : (
                                                     <button
                                                         onClick={() => addCart(item)}
-                                                        className="bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold"
+                                                        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 
+                                                                   rounded-lg font-bold transition-all duration-300 
+                                                                   transform hover:scale-105 shadow-md"
                                                     >
                                                         Add To Cart
                                                     </button>
                                                 )}
-
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            )
+                            );
                         })}
                     </div>
                 </div>
             </section>
         </div>
     );
-}
+};
 
 export default HomePageProductCard;

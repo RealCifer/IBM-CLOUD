@@ -61,13 +61,7 @@ const Login = () => {
     };
 
     return (
-        <div className='flex justify-center items-center h-screen'
-            style={{
-                background: "linear-gradient(270deg, #ff0000, #ff7300, #fffa00, #48ff00, #00ffee, #0000ff, #7a00ff, #ff00c8)",
-                backgroundSize: "400% 400%",
-                animation: "gradientAnimation 6s ease infinite"
-            }}
-        > 
+        <div className='flex justify-center items-center h-screen animated-gradient'>
             {loading && <Loader />}
 
             <style>
@@ -77,10 +71,26 @@ const Login = () => {
                     50% { background-position: 100% 50%; }
                     100% { background-position: 0% 50%; }
                 }
+                
+                @keyframes cardGlow {
+                    0% { box-shadow: 0 0 10px rgba(255, 255, 0, 0.3); }
+                    50% { box-shadow: 0 0 20px rgba(255, 255, 0, 0.6); }
+                    100% { box-shadow: 0 0 10px rgba(255, 255, 0, 0.3); }
+                }
+
+                .animated-gradient {
+                    background: linear-gradient(270deg, #ff0000, #ff7300, #fffa00, #48ff00, #00ffee, #0000ff, #7a00ff, #ff00c8);
+                    background-size: 400% 400%;
+                    animation: gradientAnimation 6s ease infinite;
+                }
+
+                .glowing-card {
+                    animation: cardGlow 3s infinite alternate;
+                }
                 `}
             </style>
 
-            <div className="login_Form bg-black bg-opacity-70 px-8 py-6 border border-yellow-500 rounded-xl shadow-md">
+            <div className="glowing-card bg-black bg-opacity-80 px-8 py-6 border border-yellow-500 rounded-xl shadow-md">
                 <div className="mb-5">
                     <h2 className='text-center text-2xl font-bold text-yellow-400'>
                         Login
@@ -112,7 +122,7 @@ const Login = () => {
                     <button
                         type='button'
                         onClick={userLoginFunction}
-                        className='bg-yellow-500 hover:bg-yellow-600 w-full text-black text-center py-2 font-bold rounded-md '
+                        className='bg-yellow-500 hover:bg-yellow-600 w-full text-black text-center py-2 font-bold rounded-md transition-all duration-300 transform hover:scale-105'
                     >
                         Login
                     </button>
