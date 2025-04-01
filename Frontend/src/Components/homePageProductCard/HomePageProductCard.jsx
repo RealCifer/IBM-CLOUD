@@ -1,17 +1,29 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import useMyStore from "../../context/myContext2";
+import axios from "axios";
 
 const HomePageProductCard = () => {
     const navigate = useNavigate();
     const context = useMyStore();
-    const { getAllProduct } = context;
+    const [ getAllProduct, setProducts ] = useState([]);
 
     useEffect(() => {
-        context.getAllProductFunction();
+        // context.getAllProductFunction();
+
+        async function fetchProducts() { 
+            const res = await axios.get("http://localhost:3000/products").then((res) => {
+                setProducts(res.data);
+                console.log(res);
+            }
+            ).catch((err) => {
+                console.log(err);
+            });
+        }
+        fetchProducts();
     }, []);
 
     const cartItems = useSelector((state) => state.cart);
