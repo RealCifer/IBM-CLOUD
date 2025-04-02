@@ -1,17 +1,25 @@
-import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ScrollTop = () => {
-    const { pathname } = useLocation()
-    useEffect(() => {
-        // console.log(pathname)
-        /* settimeout make sure this run after components have rendered. This will help fixing bug for some views where scroll to top not working perfectly */
-        setTimeout(() => {
-            // window.scrollTo({ top: 0, behavior: 'smooth' })
-            window.scrollTo(0, 0)
-        }, 0)
-    }, [pathname])
-    return null
-}
+    const { pathname } = useLocation();
+    const [visible, setVisible] = useState(false);
 
-export default ScrollTop
+    useEffect(() => {
+        setVisible(true);
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setVisible(false);
+        }, 300);
+    }, [pathname]);
+
+    return (
+        <div 
+            className={`fixed bottom-5 right-5 bg-pink-500 text-white p-3 rounded-full shadow-lg transition-all duration-500 ${visible ? 'opacity-100 scale-110' : 'opacity-0 scale-90'}`}
+        >
+            ⬆
+        </div>
+    );
+};
+
+export default ScrollTop;

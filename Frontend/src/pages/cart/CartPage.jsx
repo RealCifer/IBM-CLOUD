@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../Components/Layout/layout";
-import { Trash } from 'lucide-react'
+import { Trash } from 'lucide-react';
 import { decrementQuantity, deleteFromCart, incrementQuantity } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -15,55 +15,37 @@ const CartPage = () => {
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
-        toast.success("Delete cart")
-    }
-
-    const handleIncrement = (id) => {
-        dispatch(incrementQuantity(id));
+        toast.success("Item removed from cart!");
     };
 
-    const handleDecrement = (id) => {
-        dispatch(decrementQuantity(id));
-    };
+    const handleIncrement = (id) => dispatch(incrementQuantity(id));
+    const handleDecrement = (id) => dispatch(decrementQuantity(id));
 
-    // const cartQuantity = cartItems.length;
-
-    const cartItemTotal = cartItems.map(item => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
-
-    const cartTotal = cartItems.map(item => item.price * item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
-
+    const cartItemTotal = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const cartTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
-    }, [cartItems])
+    }, [cartItems]);
 
-    // user
-    const user = JSON.parse(localStorage.getItem('users'))
+    const user = JSON.parse(localStorage.getItem('users'));
 
-    // Buy Now Function
     const [addressInfo, setAddressInfo] = useState({
         name: "",
         address: "",
         pincode: "",
         mobileNumber: "",
         time: Timestamp.now(),
-        date: new Date().toLocaleString(
-            "en-US",
-            {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-            }
-        )
+        date: new Date().toLocaleString("en-US", {
+            month: "short", day: "2-digit", year: "numeric",
+        })
     });
 
     const buyNowFunction = () => {
-        // validation 
-        if (addressInfo.name === "" || addressInfo.address === "" || addressInfo.pincode === "" || addressInfo.mobileNumber === "") {
-            return toast.error("All Fields are required")
+        if (!addressInfo.name || !addressInfo.address || !addressInfo.pincode || !addressInfo.mobileNumber) {
+            return toast.error("All Fields are required");
         }
 
-        // Order Info 
         const orderInfo = {
             cartItems,
             addressInfo,
@@ -71,150 +53,94 @@ const CartPage = () => {
             userid: user.uid,
             status: "confirmed",
             time: Timestamp.now(),
-            date: new Date().toLocaleString(
-                "en-US",
-                {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                }
-            )
-        }
-        try {
-            const orderRef = collection(fireDB, 'order');
-            addDoc(orderRef, orderInfo);
-            setAddressInfo({
-                name: "",
-                address: "",
-                pincode: "",
-                mobileNumber: "",
+            date: new Date().toLocaleString("en-US", {
+                month: "short", day: "2-digit", year: "numeric",
             })
-            toast.success("Order Placed Successfull")
-        } catch (error) {
-            console.log(error)
-        }
+        };
 
-    }
+        try {
+            addDoc(collection(fireDB, 'order'), orderInfo);
+            setAddressInfo({ name: "", address: "", pincode: "", mobileNumber: "" });
+            toast.success("Order Placed Successfully!");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <Layout>
-            <div className="container mx-auto px-4 max-w-7xl lg:px-0">
+            <div className="container mx-auto max-w-7xl px-4 lg:px-0">
                 <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        Shopping Cart
-                    </h1>
-                    <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-                        <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-8">
-                            <h2 id="cart-heading" className="sr-only">
-                                Items in your shopping cart
-                            </h2>
-                            <ul role="list" className="divide-y divide-gray-200">
-                                {cartItems.length > 0 ?
+                    <h1 className="text-4xl font-extrabold text-gray-900">🛒 Shopping Cart</h1>
 
-                                    <>
-                                        {cartItems.map((item, index) => {
-                                            const { id, title, price, productImageUrl, quantity, category } = item
-                                            return (
-                                                <div key={index} className="">
-                                                    <li className="flex py-6 sm:py-6 ">
-                                                        <div className="flex-shrink-0">
-                                                            <img
-                                                                src={productImageUrl}
-                                                                alt="img"
-                                                                className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
-                                                            />
-                                                        </div>
+                    <form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16">
+                        {/* Cart Items Section */}
+                        <section className="rounded-lg bg-white p-6 shadow-lg lg:col-span-8">
+                            {cartItems.length > 0 ? (
+                                <ul role="list" className="divide-y divide-gray-200">
+                                    {cartItems.map((item, index) => (
+                                        <li key={index} className="flex items-center py-6">
+                                            <img src={item.productImageUrl} alt="img"
+                                                 className="h-28 w-28 rounded-lg object-cover border border-gray-300 shadow-md"/>
 
-                                                        <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                                                            <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                                                                <div>
-                                                                    <div className="flex justify-between">
-                                                                        <h3 className="text-sm">
-                                                                            <div className="font-semibold text-black">
-                                                                                {title}
-                                                                            </div>
-                                                                        </h3>
-                                                                    </div>
-                                                                    <div className="mt-1 flex text-sm">
-                                                                        <p className="text-sm text-gray-500">{category}</p>
-                                                                    </div>
-                                                                    <div className="mt-1 flex items-end">
-                                                                        <p className="text-sm font-medium text-gray-900">
-                                                                            ₹{price}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <div className="mb-2 flex">
-                                                        <div className="min-w-24 flex">
-                                                            <button onClick={() => handleDecrement(id)} type="button" className="h-7 w-7" >
-                                                                -
-                                                            </button>
-                                                            <input
-                                                                type="text"
-                                                                className="mx-1 h-7 w-9 rounded-md border text-center"
-                                                                value={quantity}
-                                                            />
-                                                            <button onClick={() => handleIncrement(id)} type="button" className="flex h-7 w-7 items-center justify-center">
-                                                                +
-                                                            </button>
-                                                        </div>
-                                                        <div className="ml-6 flex text-sm">
-                                                            <button onClick={() => deleteCart(item)} type="button" className="flex items-center space-x-1 px-2 py-1 pl-0">
-                                                                <Trash size={12} className="text-red-500" />
-                                                                <span className="text-xs font-medium text-red-500">Remove</span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                            <div className="ml-4 flex flex-1 flex-col">
+                                                <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+                                                <p className="text-sm text-gray-500">{item.category}</p>
+                                                <p className="text-lg font-bold text-gray-900 mt-2">₹{item.price}</p>
+
+                                                {/* Quantity & Remove Buttons */}
+                                                <div className="mt-3 flex items-center space-x-4">
+                                                    <button onClick={() => handleDecrement(item.id)}
+                                                            className="px-3 py-1 text-lg font-bold border border-gray-400 rounded-md hover:bg-gray-200">-</button>
+                                                    <span className="text-lg font-semibold">{item.quantity}</span>
+                                                    <button onClick={() => handleIncrement(item.id)}
+                                                            className="px-3 py-1 text-lg font-bold border border-gray-400 rounded-md hover:bg-gray-200">+</button>
+
+                                                    <button onClick={() => deleteCart(item)}
+                                                            className="flex items-center space-x-1 px-3 py-1 text-sm text-red-500 font-semibold border border-red-500 rounded-md hover:bg-red-100">
+                                                        <Trash size={16}/>
+                                                        <span>Remove</span>
+                                                    </button>
                                                 </div>
-                                            )
-                                        })}
-                                    </>
-                                    :
-
-                                    <h1>Not Found</h1>}
-                            </ul>
-                        </section>
-                        {/* Order summary */}
-                        <section
-                            aria-labelledby="summary-heading"
-                            className="mt-16 rounded-md bg-white lg:col-span-4 lg:mt-0 lg:p-0"
-                        >
-                            <h2
-                                id="summary-heading"
-                                className=" border-b border-gray-200 px-4 py-3 text-lg font-medium text-gray-900 sm:p-4"
-                            >
-                                Price Details
-                            </h2>
-                            <div>
-                                <dl className=" space-y-1 px-2 py-4">
-                                    <div className="flex items-center justify-between">
-                                        <dt className="text-sm text-gray-800">Price ({cartItemTotal} item)</dt>
-                                        <dd className="text-sm font-medium text-gray-900">₹ {cartTotal}</dd>
-                                    </div>
-                                    <div className="flex items-center justify-between py-4">
-                                        <dt className="flex text-sm text-gray-800">
-                                            <span>Delivery Charges</span>
-                                        </dt>
-                                        <dd className="text-sm font-medium text-green-700">Free</dd>
-                                    </div>
-                                    <div className="flex items-center justify-between border-y border-dashed py-4 ">
-                                        <dt className="text-base font-medium text-gray-900">Total Amount</dt>
-                                        <dd className="text-base font-medium text-gray-900">₹ {cartTotal}</dd>
-                                    </div>
-                                </dl>
-                                <div className="px-2 pb-4 font-medium text-green-700">
-                                    <div className="flex gap-4 mb-6">
-                                        {user
-                                            ? <BuyNowModal
-                                                addressInfo={addressInfo}
-                                                setAddressInfo={setAddressInfo}
-                                                buyNowFunction={buyNowFunction}
-                                            /> : <Navigate to={'/login'}/>
-                                        }
-                                    </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-10">
+                                    <h2 className="text-2xl font-semibold text-gray-500">Your cart is empty 😔</h2>
+                                    <p className="text-gray-400 mt-2">Start shopping to add items to your cart.</p>
                                 </div>
+                            )}
+                        </section>
+
+                        {/* Order Summary Section */}
+                        <section className="mt-16 rounded-lg bg-white p-6 shadow-lg lg:col-span-4 lg:mt-0">
+                            <h2 className="border-b border-gray-200 pb-3 text-xl font-semibold text-gray-900">
+                                🏷️ Price Details
+                            </h2>
+                            <div className="space-y-4 py-6">
+                                <div className="flex justify-between text-lg">
+                                    <span>Items ({cartItemTotal})</span>
+                                    <span className="font-bold">₹{cartTotal}</span>
+                                </div>
+                                <div className="flex justify-between text-lg">
+                                    <span>Delivery Charges</span>
+                                    <span className="text-green-700 font-bold">Free</span>
+                                </div>
+                                <div className="flex justify-between text-lg border-t pt-4 font-bold">
+                                    <span>Total Amount</span>
+                                    <span>₹{cartTotal}</span>
+                                </div>
+                            </div>
+
+                            {/* Checkout Button */}
+                            <div className="flex justify-center">
+                                {user ? (
+                                    <BuyNowModal addressInfo={addressInfo} setAddressInfo={setAddressInfo} buyNowFunction={buyNowFunction}/>
+                                ) : (
+                                    <Navigate to={'/login'}/>
+                                )}
                             </div>
                         </section>
                     </form>
@@ -222,6 +148,6 @@ const CartPage = () => {
             </div>
         </Layout>
     );
-}
+};
 
 export default CartPage;

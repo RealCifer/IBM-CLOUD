@@ -11,121 +11,80 @@ const CategoryPage = () => {
     const { categoryname } = useParams();
     const context = useContext(myContext);
     const { getAllProduct, loading } = context;
-
     const navigate = useNavigate();
-
-    const filterProduct = getAllProduct.filter((obj) => obj.category.includes(categoryname))
-
-
-    const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart);
+
+    const filterProduct = getAllProduct.filter((obj) => obj.category.includes(categoryname));
 
     const addCart = (item) => {
-        // console.log(item)
         dispatch(addToCart(item));
-        toast.success("Add to cart")
-    }
+        toast.success("Added to cart!");
+    };
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
-        toast.success("Delete cart")
-    }
-
-    // console.log(cartItems)
+        toast.success("Removed from cart!");
+    };
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
-    }, [cartItems])
+    }, [cartItems]);
+
     return (
         <Layout>
-            <div className="mt-10">
-                {/* Heading  */}
-                <div className="">
-                    <h1 className=" text-center mb-5 text-2xl font-semibold first-letter:uppercase">{categoryname}</h1>
-                </div>
-
-                {/* main  */}
-                {loading ?
-                    <>
-                        <div className="flex justify-center">
-                            <Loader />
-                        </div>
-                    </>
-                    :
-                    <>
-                        <section className="text-gray-600 body-font">
-                            <div className="container px-5 py-5 mx-auto ">
-                                <div className="flex flex-wrap -m-4  justify-center">
-                                    {filterProduct.length > 0
-                                        ?
-
-                                        <>
-                                            {filterProduct.map((item, index) => {
-                                                const { id, title, price, productImageUrl } = item
-                                                return (
-                                                    <div key={index} className="p-4 w-full md:w-1/4">
-                                                        <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
-                                                            <img
-                                                                onClick={() => navigate(`/productinfo/${id}`)}
-                                                                className="lg:h-80  h-96 w-full"
-                                                                src={productImageUrl}
-                                                                alt="blog"
-                                                            />
-                                                            <div className="p-6">
-                                                                <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                                                                    E-bharat
-                                                                </h2>
-                                                                <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                                                                    {title.substring(0, 25)}
-                                                                </h1>
-                                                                <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                                                                    ₹{price}
-                                                                </h1>
-
-                                                                <div
-                                                                    className="flex justify-center ">
-                                                                    {cartItems.some((p) => p.id === item.id)
-
-                                                                        ?
-                                                                        <button
-                                                                            onClick={() => deleteCart(item)}
-                                                                            className=" bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                                            Delete From Cart
-                                                                        </button>
-
-                                                                        :
-
-                                                                        <button
-                                                                            onClick={() => addCart(item)}
-                                                                            className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                                            Add To Cart
-                                                                        </button>
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        </div>
+            <div className="mt-12 px-5">
+                <h1 className="text-center text-4xl font-bold text-gray-800 capitalize">{categoryname}</h1>
+                {loading ? (
+                    <div className="flex justify-center py-16">
+                        <Loader />
+                    </div>
+                ) : (
+                    <section className="container mx-auto py-8">
+                        <div className="flex flex-wrap justify-center gap-6">
+                            {filterProduct.length > 0 ? (
+                                filterProduct.map((item, index) => {
+                                    const { id, title, price, productImageUrl } = item;
+                                    return (
+                                        <div key={index} className="w-full sm:w-1/2 md:w-1/4 p-4">
+                                            <div className="rounded-xl overflow-hidden shadow-lg border border-gray-300 bg-white transform transition duration-300 hover:scale-105">
+                                                <img onClick={() => navigate(`/productinfo/${id}`)}
+                                                    className="h-72 w-full object-cover cursor-pointer"
+                                                    src={productImageUrl} alt={title} />
+                                                <div className="p-4 text-center">
+                                                    <h2 className="text-gray-500 text-sm uppercase tracking-wide">E-Bharat</h2>
+                                                    <h1 className="text-xl font-semibold text-gray-900 mt-2 truncate">{title}</h1>
+                                                    <h1 className="text-lg font-bold text-gray-700 mt-2">₹{price}</h1>
+                                                    <div className="mt-4">
+                                                        {cartItems.some((p) => p.id === item.id) ? (
+                                                            <button onClick={() => deleteCart(item)}
+                                                                className="w-full bg-red-600 hover:bg-red-500 text-white py-2 rounded-lg font-semibold shadow-md transition-all">
+                                                                Remove from Cart
+                                                            </button>
+                                                        ) : (
+                                                            <button onClick={() => addCart(item)}
+                                                                className="w-full bg-gradient-to-r from-pink-500 to-red-500 hover:opacity-90 text-white py-2 rounded-lg font-semibold shadow-md transition-all">
+                                                                Add to Cart
+                                                            </button>
+                                                        )}
                                                     </div>
-                                                )
-                                            })}
-                                        </>
-
-                                        :
-
-                                        <div>
-                                            <div className="flex justify-center">
-                                                <img className=" mb-2" src="https://cdn-icons-png.flaticon.com/128/2748/2748614.png" alt="" />
+                                                </div>
                                             </div>
-                                            <h1 className=" text-black text-xl">No {categoryname} product found</h1>
                                         </div>
-                                    }
+                                    );
+                                })
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-16">
+                                    <img className="mb-4 w-16" src="https://cdn-icons-png.flaticon.com/128/2748/2748614.png" alt="No products" />
+                                    <h1 className="text-xl font-semibold text-gray-600">No {categoryname} products found</h1>
                                 </div>
-                            </div>
-                        </section>
-                    </>
-                }
+                            )}
+                        </div>
+                    </section>
+                )}
             </div>
         </Layout>
     );
-}
+};
 
 export default CategoryPage;

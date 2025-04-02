@@ -13,7 +13,7 @@ const Navbar = () => {
     const cartItems = useSelector((state) => state.cart);
 
     return (
-        <nav className="bg-[#dc7cae] sticky top-0 shadow-xl">
+        <nav className="bg-[#dc7cae]  top-0 shadow-xl">
             <style>
                 {`
                     .glow-effect {
@@ -32,31 +32,31 @@ const Navbar = () => {
                 <div className="right flex justify-center mb-3 lg:mb-0">
                     <ul className="flex space-x-2 text-black font-medium text-xs px-4">
                         <li>
-                            <Link to={'/'} className="px-3 py-1 border border-gray-400 rounded-md shadow-md hover:bg-gray-300 hover:border-gray-500 transition-all duration-300">Home</Link>
+                            <Link to={'/'} className="px-3 py-1 border border-[#e89bc2] bg-[#f3c1e0] rounded-md shadow-md hover:bg-[#e89bc2] hover:border-[#d478a3] transition-all duration-300">Home</Link>
                         </li>
                         <li>
-                            <Link to={'/allproduct'} className="px-3 py-1 border border-gray-400 rounded-md shadow-md hover:bg-gray-300 hover:border-gray-500 transition-all duration-300">Listed Product</Link>
+                            <Link to={'/allproduct'} className="px-3 py-1 border border-[#e89bc2] bg-[#f3c1e0] rounded-md shadow-md hover:bg-[#e89bc2] hover:border-[#d478a3] transition-all duration-300">Listed Product</Link>
                         </li>
                         {!user && <li>
-                            <Link to={'/signup'} className="px-3 py-1 border border-blue-600 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 hover:border-blue-700 transition-all duration-300">Signup</Link>
+                            <Link to={'/signup'} className="px-3 py-1 border border-[#388E3C] bg-[#4CAF50] text-white rounded-md shadow-md hover:bg-[#388E3C] hover:border-[#2E7D32] transition-all duration-300">Signup</Link>
                         </li>}
                         {!user && <li>
-                            <Link to={'/admin'} className="px-3 py-1 border border-red-600 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600 hover:border-red-700 transition-all duration-300">Admin</Link>
+                            <Link to={'/admin'} className="px-3 py-1 border border-[#C62828] bg-[#E53935] text-white rounded-md shadow-md hover:bg-[#C62828] hover:border-[#B71C1C] transition-all duration-300">Admin</Link>
                         </li>}
                         {!user && <li>
-                            <Link to={'/login'} className="px-3 py-1 border border-green-600 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 hover:border-green-700 transition-all duration-300">Login</Link>
+                            <Link to={'/login'} className="px-3 py-1 border border-[#1976D2] bg-[#2196F3] text-white rounded-md shadow-md hover:bg-[#1976D2] hover:border-[#1565C0] transition-all duration-300">Login</Link>
                         </li>}
                         {user?.role === "user" && <li>
-                            <Link to={'/user-dashboard'} className="px-3 py-1 border border-yellow-600 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600 hover:border-yellow-700 transition-all duration-300">User Dashboard</Link>
+                            <Link to={'/user-dashboard'} className="px-3 py-1 border border-[#F57C00] bg-[#FF9800] text-white rounded-md shadow-md hover:bg-[#F57C00] hover:border-[#E65100] transition-all duration-300">User Dashboard</Link>
                         </li>}
                         {user?.role === "admin" && <li>
-                            <Link to={'/admin-dashboard'} className="px-3 py-1 border border-purple-600 bg-purple-500 text-white rounded-md shadow-md hover:bg-purple-600 hover:border-purple-700 transition-all duration-300">Admin Dashboard</Link>
+                            <Link to={'/admin-dashboard'} className="px-3 py-1 border border-[#7B1FA2] bg-[#9C27B0] text-white rounded-md shadow-md hover:bg-[#7B1FA2] hover:border-[#6A1B9A] transition-all duration-300">Admin Dashboard</Link>
                         </li>}
                         {user && <li>
                             <button onClick={logout} className="px-3 py-1 border border-gray-500 bg-gray-400 text-white rounded-md shadow-md hover:bg-gray-500 hover:border-gray-600 transition-all duration-300">Logout</button>
                         </li>}
                         <li>
-                            <Link to={'/cart'} className="px-3 py-1 border border-orange-600 bg-orange-500 text-white rounded-md shadow-md hover:bg-orange-600 hover:border-orange-700 transition-all duration-300">Cart ({cartItems.length})</Link>
+                            <Link to={'/cart'} className="px-3 py-1 border border-[#F57C00] bg-[#FF9800] text-white rounded-md shadow-md hover:bg-[#F57C00] hover:border-[#E65100] transition-all duration-300">Cart ({cartItems.length})</Link>
                         </li>
                     </ul>
                 </div>
