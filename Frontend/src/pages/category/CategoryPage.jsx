@@ -15,7 +15,13 @@ const CategoryPage = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart);
 
-    const filterProduct = getAllProduct.filter((obj) => obj.category.includes(categoryname));
+    console.log("📌 Category Name from URL:", categoryname);
+    console.log("📦 All Products:", getAllProduct);
+
+    // Fixing Filtering Logic
+    const filterProduct = getAllProduct.filter((obj) => obj.category?.toLowerCase() === categoryname.toLowerCase());
+
+    console.log("🔍 Filtered Products:", filterProduct);
 
     const addCart = (item) => {
         dispatch(addToCart(item));
@@ -44,19 +50,22 @@ const CategoryPage = () => {
                         <div className="flex flex-wrap justify-center gap-6">
                             {filterProduct.length > 0 ? (
                                 filterProduct.map((item, index) => {
-                                    const { id, title, price, productImageUrl } = item;
+                                    const { _id, title, price, productImageUrl } = item;
                                     return (
                                         <div key={index} className="w-full sm:w-1/2 md:w-1/4 p-4">
                                             <div className="rounded-xl overflow-hidden shadow-lg border border-gray-300 bg-white transform transition duration-300 hover:scale-105">
-                                                <img onClick={() => navigate(`/productinfo/${id}`)}
+                                                <img 
+                                                    onClick={() => navigate(`/productinfo/${_id}`)}
                                                     className="h-72 w-full object-cover cursor-pointer"
-                                                    src={productImageUrl} alt={title} />
+                                                    src={productImageUrl} 
+                                                    alt={title} 
+                                                />
                                                 <div className="p-4 text-center">
                                                     <h2 className="text-gray-500 text-sm uppercase tracking-wide">E-Bharat</h2>
                                                     <h1 className="text-xl font-semibold text-gray-900 mt-2 truncate">{title}</h1>
                                                     <h1 className="text-lg font-bold text-gray-700 mt-2">₹{price}</h1>
                                                     <div className="mt-4">
-                                                        {cartItems.some((p) => p.id === item.id) ? (
+                                                        {cartItems.some((p) => p._id === item._id) ? (
                                                             <button onClick={() => deleteCart(item)}
                                                                 className="w-full bg-red-600 hover:bg-red-500 text-white py-2 rounded-lg font-semibold shadow-md transition-all">
                                                                 Remove from Cart

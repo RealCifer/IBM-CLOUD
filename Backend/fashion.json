@@ -1,0 +1,32 @@
+{
+  "fashionProducts": [
+    {
+      "id": 1,
+      "title": "Stylish Jacket",
+      "price": 1999,
+      "description": "A trendy jacket perfect for winter.",
+      "img": "https://images.unsplash.com/photo-1594633313826-7f7eaf4cbb52"
+    },
+    {
+      "id": 2,
+      "title": "Trendy Sneakers",
+      "price": 2499,
+      "description": "Comfortable and stylish sneakers.",
+      "img": "https://images.unsplash.com/photo-1603808033192-0e60f01fd6d6"
+    },
+    {
+      "id": 3,
+      "title": "Classic Sunglasses",
+      "price": 999,
+      "description": "Protect your eyes with a classic look.",
+      "img": "https://images.unsplash.com/photo-1585386959984-a4155224a894"
+    },
+    {
+      "id": 4,
+      "title": "Elegant Handbag",
+      "price": 1799,
+      "description": "A stylish handbag for all occasions.",
+      "img": "https://images.unsplash.com/photo-1589998059171-988d887df646"
+    }
+  ]
+}
