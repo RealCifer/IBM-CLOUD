@@ -1,0 +1,33 @@
+{
+    "ElectronicsProducts": [
+      {
+        "id": 1,
+        "title": "Stylish Jacket",
+        "price": 1999,
+        "description": "A trendy jacket perfect for winter.",
+        "img": "https://images.app.goo.gl/RfdaMUb1sa3icbMz9"
+      },
+      {
+        "id": 2,  
+        "title": "Trendy Sneakers",
+        "price": 2499,
+        "description": "Comfortable and stylish sneakers.",
+        "img": "https://images.app.goo.gl/WxPNpdEPURsXtwUV9"
+      },
+      {
+        "id": 3,
+        "title": "Classic Sunglasses",
+        "price": 999,
+        "description": "Protect your eyes with a classic look.",
+        "img": "https://images.app.goo.gl/o14gkwBJ3w62RbUV8"
+      },
+      {
+        "id": 4,
+        "title": "Elegant Handbag",
+        "price": 1799,
+        "description": "A stylish handbag for all occasions.",
+        "img": "https://images.app.goo.gl/L2J3o3UzJfv1SGe87"
+      }
+    ]
+  }
+  

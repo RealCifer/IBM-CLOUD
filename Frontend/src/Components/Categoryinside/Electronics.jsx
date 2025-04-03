@@ -12,7 +12,7 @@ const FashionCategoryPage = () => {
     useEffect(() => {
         axios.get("http://localhost:3000/fashionProducts")
             .then((res) => {
-                console.log("📦 Fashion Products:", res.data);
+                console.log("📦 Electronics Products:", res.data);
                 setProducts(res.data);
                 setLoading(false);
             })
@@ -42,16 +42,16 @@ const FashionCategoryPage = () => {
 
             {}
             <header className="text-white text-center py-6 bg-gradient-to-r from-pink-500 to-purple-500 text-4xl font-extrabold font-poppins tracking-wide shadow-lg">
-                ✨ Cloud Store - <span className="glowing-text">FASHION</span> ✨
+                ✨ Cloud Store - <span className="glowing-text">ELECTRONICS</span> ✨
             </header>
 
             {}
             <div className="container mx-auto px-5 py-10">
                 <h2 className="text-center text-3xl font-bold font-poppins mb-8 text-gray-900 drop-shadow-lg">
-                    🔥 Discover Trendy Fashion 🔥
+                    🔥 Latest Technology In the Town 🔥
                 </h2>
 
-                {loading && <p className="text-center text-gray-500">Loading fashion products...</p>}
+                {loading && <p className="text-center text-gray-500">Loading Electronic products...</p>}
                 {error && <p className="text-center text-red-500">{error}</p>}
 
                 {!loading && !error && products.length > 0 ? (
@@ -98,13 +98,13 @@ const FashionCategoryPage = () => {
                         ))}
                     </div>
                 ) : (
-                    !loading && !error && <p className="text-center text-gray-500">No fashion products found.</p>
+                    !loading && !error && <p className="text-center text-gray-500">No Electronic products found.</p>
                 )}
             </div>
 
             {}
             <footer className="text-center text-white py-5 bg-gradient-to-r from-pink-500 to-purple-500 font-semibold tracking-wide shadow-lg">
-                🚀 Cloud Store © 2025 - Stay Fashionable! 🚀
+                🚀 Cloud Store © 2025 - Stay Techy! 🚀
             </footer>
         </Layout>
     );

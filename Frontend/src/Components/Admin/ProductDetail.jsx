@@ -7,98 +7,79 @@ import { fireDB } from "../../firebase/FirebaseConfig";
 import toast from "react-hot-toast";
 
 const ProductDetail = () => {
-    //const context = useContext(myContext);
-    const context = useMyStore();
+  const context = useContext(myContext);
+  const { loading, setLoading, getAllProduct, getAllProductFunction } = context;
 
-    const { loading, setLoading, getAllProduct, getAllProductFunction } = context;
-    // console.log(getAllProduct)
+  const navigate = useNavigate();
 
-    // navigate 
-    const navigate = useNavigate();
-
-    // Delete product 
-    const deleteProduct = async (id) => {
-        setLoading(true)
-        try {
-            await deleteDoc(doc(fireDB, 'products', id))
-            toast.success('Product Deleted successfully')
-            getAllProductFunction();
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-        }
+  const deleteProduct = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    
+    setLoading(true);
+    try {
+      await deleteDoc(doc(fireDB, 'products', id));
+      toast.success('Product Deleted successfully');
+      getAllProductFunction();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast.error("Failed to delete product");
     }
-    return (
-        <div>
-            <div className="py-5 flex justify-between items-center">
-                {}
-                <h1 className=" text-xl text-pink-300 font-bold">All Product</h1>
-                {}
-                <Link to={'/addproduct'}>
-                    <button className="px-5 py-2 bg-pink-50 border border-pink-100 rounded-lg">Add Product</button>
-                </Link>
-            </div>
+    setLoading(false);
+  };
 
-            {}
-            <div className="flex justify-center relative top-20">
-                {loading && <Loader />}
-            </div>
+  return (
+    <section className="p-8 bg-gradient-to-br from-gray-100 to-white min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 drop-shadow-lg">
+          🛍️ All Products
+        </h1>
+        <Link to={'/addproduct'}>
+          <button className="px-5 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600 transition">
+            ➕ Add Product
+          </button>
+        </Link>
+      </div>
 
-            {}
-            <div className="w-full overflow-x-auto mb-5">
+      {loading && <div className="flex justify-center"><Loader /></div>}
 
-                <table className="w-full text-left border border-collapse sm:border-separate border-pink-100 text-pink-400" >
-
-                    <tbody>
-                        <tr>
-                            <th scope="col" className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">S.No.</th>
-                            <th scope="col" className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">Image</th>
-                            <th scope="col" className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">Title</th>
-                            <th scope="col" className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">Price</th>
-                            <th scope="col" className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">Category</th>
-                            <th scope="col" className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100"> Date</th>
-                            <th scope="col" className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">Action</th>
-                            <th scope="col" className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">Action</th>
-                        </tr>
-                        {getAllProduct.map((item, index) => {
-                            const { id, title, price, category, date, productImageUrl } = item
-                            return (
-                                <tr key={index} className="text-pink-300">
-                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 ">
-                                        {index + 1}.
-                                    </td>
-                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                        <div className="flex justify-center">
-                                            <img className="w-20 " src={productImageUrl} alt="" />
-                                        </div>
-                                    </td>
-                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                        {title}
-                                    </td>
-                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                        ₹{price}
-                                    </td>
-                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                        {category}
-                                    </td>
-                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                        {date}
-                                    </td>
-                                    <td onClick={()=> navigate(`/updateproduct/${id}`)} className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 text-green-500 cursor-pointer ">
-                                        Edit
-                                    </td>
-                                    <td onClick={()=> deleteProduct(id)} className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 text-red-500 cursor-pointer ">
-                                        Delete
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
-}
+      <div className="overflow-x-auto shadow-lg rounded-xl border border-gray-200 bg-white/80 backdrop-blur-xl">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-gradient-to-r from-pink-200 to-purple-200 text-gray-800">
+              {['S.No.', 'Image', 'Title', 'Price', 'Category', 'Date', 'Edit', 'Delete'].map((heading, index) => (
+                <th key={index} className="px-4 py-3 text-sm font-semibold">
+                  {heading}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {getAllProduct.map((item, index) => {
+              const { id, title, price, category, date, productImageUrl } = item;
+              return (
+                <tr key={id} className="border-t border-gray-200 hover:bg-pink-50 transition">
+                  <td className="px-4 py-3">{index + 1}.</td>
+                  <td className="px-4 py-3">
+                    <img src={productImageUrl} alt="Product" className="w-16 h-16 object-cover rounded-lg shadow-md" />
+                  </td>
+                  <td className="px-4 py-3">{title}</td>
+                  <td className="px-4 py-3 text-green-600 font-bold">₹{price}</td>
+                  <td className="px-4 py-3">{category}</td>
+                  <td className="px-4 py-3">{date}</td>
+                  <td className="px-4 py-3 text-blue-500 cursor-pointer hover:scale-105 transition" onClick={() => navigate(`/updateproduct/${id}`)}>
+                    ✏️ Edit
+                  </td>
+                  <td className="px-4 py-3 text-red-500 cursor-pointer hover:scale-105 transition" onClick={() => deleteProduct(id)}>
+                    ❌ Delete
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+};
 
 export default ProductDetail;

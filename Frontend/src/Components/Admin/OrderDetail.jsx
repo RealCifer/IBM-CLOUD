@@ -2,188 +2,70 @@ import { useContext } from "react";
 import myContext from "../../context/myContext";
 
 const OrderDetail = () => {
-   // const context = useContext(myContext);
-   const context = useMyStore();
-const { orderDetail } = context;
-    const { getAllOrder, deleteProduct } = context;
-    // console.log(getAllOrder)
-    return (
-        <div>
-            <div>
-                <div className="py-5">
-                    {}
-                    <h1 className=" text-xl text-pink-300 font-bold">All Order</h1>
-                </div>
+  const context = useContext(myContext);
+  const { getAllOrder, deleteProduct } = context;
 
-                {}
-                <div className="w-full overflow-x-auto">
-                    <table className="w-full text-left border border-collapse sm:border-separate border-pink-100 text-pink-400" >
-                        <tbody>
-                            <tr>
-                                <th scope="col" className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                    S.No.
-                                </th>
+  return (
+    <section className="p-8 bg-gradient-to-br from-gray-100 to-white min-h-screen">
+      {/* 🔥 Title */}
+      <h1 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 drop-shadow-lg mb-6">
+        🔥 All Orders
+      </h1>
 
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Order Id
-                                </th>
+      {/* Table Container */}
+      <div className="overflow-x-auto shadow-lg rounded-xl border border-gray-200 bg-white/60 backdrop-blur-xl">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-gradient-to-r from-pink-200 to-purple-200 text-gray-800">
+              {[
+                "S.No.", "Order ID", "Image", "Title", "Category", "Price", "Quantity",
+                "Total", "Status", "Name", "Address", "Pincode", "Phone", "Email", "Date", "Action"
+              ].map((heading, index) => (
+                <th key={index} className="px-4 py-3 text-sm font-semibold">
+                  {heading}
+                </th>
+              ))}
+            </tr>
+          </thead>
 
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Image
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Title
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Category
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Price
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Quantity
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Total Price
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Status
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Name
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Address
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Pincode
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Phone Number
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Email
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Date
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100">
-                                    Action
-                                </th>
-
-
-                            </tr>
-                            {getAllOrder.map((order) => {
-                                console.log(order)
-                                return (
-                                    <>
-                                        {order.cartItems.map((item, index) => {
-                                            const { id, productImageUrl, title, category, price, quantity } = item
-                                            return (
-                                                <tr key={index} className="text-pink-300">
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 ">
-                                                        {index + 1}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 ">
-                                                        {id}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        <img src={productImageUrl} alt="img" />
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {title}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {category}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        ₹{price}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {quantity}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        ₹{price * quantity}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l text-green-600  first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {order.status}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {order.addressInfo.name}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {order.addressInfo.address}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {order.addressInfo.pincode}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {order.addressInfo.mobileNumber}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 ">
-                                                        {order.email}
-                                                    </td>
-
-                                                    <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                        {order.date}
-                                                    </td>
-
-                                                    <td onClick={()=> deleteProduct(order.id)} className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 text-red-500 cursor-pointer ">
-                                                        Delete
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
-}
+          <tbody>
+            {getAllOrder.map((order, orderIndex) =>
+              order.cartItems.map((item, index) => {
+                const { id, productImageUrl, title, category, price, quantity } = item;
+                return (
+                  <tr key={index} className="border-t border-gray-200 hover:bg-pink-50 transition">
+                    <td className="px-4 py-3">{orderIndex + 1}</td>
+                    <td className="px-4 py-3">{id}</td>
+                    <td className="px-4 py-3">
+                      <img src={productImageUrl} alt="Product" className="w-12 h-12 object-cover rounded-lg shadow-md" />
+                    </td>
+                    <td className="px-4 py-3">{title}</td>
+                    <td className="px-4 py-3">{category}</td>
+                    <td className="px-4 py-3 text-green-600 font-bold">₹{price}</td>
+                    <td className="px-4 py-3">{quantity}</td>
+                    <td className="px-4 py-3 text-blue-600 font-bold">₹{price * quantity}</td>
+                    <td className={`px-4 py-3 font-semibold ${order.status === "Delivered" ? "text-green-600" : "text-red-500"}`}>
+                      {order.status}
+                    </td>
+                    <td className="px-4 py-3">{order.addressInfo.name}</td>
+                    <td className="px-4 py-3">{order.addressInfo.address}</td>
+                    <td className="px-4 py-3">{order.addressInfo.pincode}</td>
+                    <td className="px-4 py-3">{order.addressInfo.mobileNumber}</td>
+                    <td className="px-4 py-3">{order.email}</td>
+                    <td className="px-4 py-3">{order.date}</td>
+                    <td className="px-4 py-3 text-red-500 cursor-pointer hover:scale-105 transition transform" 
+                      onClick={() => deleteProduct(order.id)}>
+                      ❌ Delete
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+};
 
 export default OrderDetail;

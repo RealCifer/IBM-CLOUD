@@ -12,14 +12,15 @@ const chartdata = [
 
 function SalesChart() {
   return (
-    <Card>
-      <Title>Sales vs Stock Overview</Title>
+    <Card className="p-6 bg-white shadow-lg rounded-xl border border-gray-200 transition-transform hover:scale-[1.02] active:scale-105">
+      <Title className="text-lg font-semibold text-gray-800">Sales vs Stock Overview</Title>
       <AreaChart
         className="h-72 mt-4"
         data={chartdata}
         index="date"
         categories={["Sales", "Stock"]}
-        colors={["pink", "indigo"]}
+        colors={["#dc7cae", "#6366F1"]}  // Pink and Indigo
+        curveType="monotone"
       />
     </Card>
   );
