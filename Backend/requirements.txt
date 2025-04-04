@@ -1,0 +1,1 @@
+express passport passport-google-oauth20 dotenv cors jsonwebtoken cookie-session express-session connect-mongo helmet morgan bcryptjs
