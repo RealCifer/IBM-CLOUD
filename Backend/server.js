@@ -64,7 +64,7 @@ app.post('/getUserOrder', async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(400).json({ error: 'User not found' });
     }
 
     // Check if the order is found in the user's orders
@@ -73,7 +73,7 @@ app.post('/getUserOrder', async (req, res) => {
     if (order) {
       return res.json({ order });
     } else {
-      return res.status(404).json({ error: 'Order not found for this user' });
+      return res.status(400).json({ error: 'Order not found for this user' });
     }
   } catch (error) {
     console.error(error);
@@ -94,20 +94,50 @@ app.post('/getUserCart', async (req, res) => {
     const user = await User.findById(userId).populate('cart');
     
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(400).json({ error: 'User not found' });
     }
     
     // If the user has a cart, return it
     if (user.cart) {
       return res.json({ cart: user.cart });
     } else {
-      return res.status(404).json({ error: 'No cart found for this user' });
+      return res.status(400).json({ error: 'No cart found for this user' });
     }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Server error' });
   }
 });
+
+app.post("/addToCart", async (req, res) => {
+  const { email, productId, quantity } = req.body;
+  const cartItem = {
+    product: new mongoose.Types.ObjectId(productId),
+    quantity
+  };
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).json({ message: "User not found" });
+  }
+  const cartId = user.cart;
+  const cart = await Cart.findOne({ _id: cartId });
+  if (!cart) {
+    const newCart = new Cart({ _id: user._id, products: [cartItem] });
+    await newCart.save();
+    user.cart = newCart._id;
+    await user.save();
+    return res.json({ message: "Item added to cart" });
+  }
+  const existingItem = cart.products.find(item => item.product.toString() === `${productId}`);
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  }
+  else {
+    cart.items.push(cartItem);
+  }
+  await cart.save();
+  res.json({ message: "Item added to cart" });
+})
 
 app.get("/products", async (req, res) => {
   try {

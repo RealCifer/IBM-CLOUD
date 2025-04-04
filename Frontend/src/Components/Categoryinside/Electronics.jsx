@@ -10,9 +10,9 @@ const FashionCategoryPage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/fashionProducts")
+        axios.get("http://localhost:3000/Products")
             .then((res) => {
-                console.log("📦 Electronics Products:", res.data);
+                console.log("📦 Fashion Products:", res.data);
                 setProducts(res.data);
                 setLoading(false);
             })
@@ -22,6 +22,23 @@ const FashionCategoryPage = () => {
                 setLoading(false);
             });
     }, []);
+
+    const addToCart = async (productId) => {
+        const { email } = JSON.parse(localStorage.getItem("users"));
+        axios.post("http://localhost:3000/addToCart", {
+            email,
+            productId,
+            quantity: 1,
+        })
+            .then((res) => {
+                console.log("✅ Item added to cart:", res.data);
+                alert("Item added to cart successfully!");
+            })
+            .catch((error) => {
+                console.error("❌ Error adding item to cart:", error);
+                alert("Failed to add item to cart.");
+            });
+    }
 
     return (
         <Layout>
@@ -34,24 +51,23 @@ const FashionCategoryPage = () => {
                     }
                     .glowing-text {
                         color: #fff;
-                        font-weight: bold;
+                        font-weight: normal;
+                        font-size: 1.5rem;
                         animation: glow 1.5s infinite alternate;
                     }
                 `}
             </style>
 
-            {}
-            <header className="text-white text-center py-6 bg-gradient-to-r from-pink-500 to-purple-500 text-4xl font-extrabold font-poppins tracking-wide shadow-lg">
+            <header className="text-white text-center py-6 bg-gradient-to-r from-pink-500 to-purple-500 text-2xl font-semibold font-poppins tracking-wide shadow-lg">
                 ✨ Cloud Store - <span className="glowing-text">ELECTRONICS</span> ✨
             </header>
 
-            {}
             <div className="container mx-auto px-5 py-10">
                 <h2 className="text-center text-3xl font-bold font-poppins mb-8 text-gray-900 drop-shadow-lg">
-                    🔥 Latest Technology In the Town 🔥
+                    🔥 Discover Newest Tech 🔥
                 </h2>
 
-                {loading && <p className="text-center text-gray-500">Loading Electronic products...</p>}
+                {loading && <p className="text-center text-gray-500">Loading Electronics products...</p>}
                 {error && <p className="text-center text-red-500">{error}</p>}
 
                 {!loading && !error && products.length > 0 ? (
@@ -61,10 +77,9 @@ const FashionCategoryPage = () => {
                                 key={product._id}
                                 className="relative bg-white backdrop-blur-md bg-opacity-30 border border-gray-200 shadow-lg p-4 rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
                             >
-                                {}
                                 <div className="relative">
                                     <img
-                                        src={product.productImageUrl}
+                                        src={product.imageUrl}
                                         alt={product.title}
                                         className="w-full h-48 object-cover rounded-lg"
                                     />
@@ -73,14 +88,12 @@ const FashionCategoryPage = () => {
                                     </span>
                                 </div>
 
-                                {}
                                 <h3 className="text-lg font-bold mt-3 text-gray-900 font-poppins tracking-wide">
                                     {product.title}
                                 </h3>
                                 <p className="text-gray-600 text-sm font-medium">{product.description}</p>
                                 <p className="text-pink-600 font-extrabold text-lg mt-2">₹{product.price}</p>
 
-                                {}
                                 <div className="flex justify-between mt-4">
                                     <button
                                         className="bg-blue-500 text-white py-1.5 px-3 text-sm rounded-md hover:bg-blue-600 transition shadow-md"
@@ -89,6 +102,7 @@ const FashionCategoryPage = () => {
                                         💳 Buy Now
                                     </button>
                                     <button
+                                        onClick={() => addToCart(product._id)}
                                         className="bg-green-500 text-white py-1.5 px-3 text-sm rounded-md hover:bg-green-600 transition shadow-md"
                                     >
                                         🛒 Add to Cart
@@ -98,14 +112,9 @@ const FashionCategoryPage = () => {
                         ))}
                     </div>
                 ) : (
-                    !loading && !error && <p className="text-center text-gray-500">No Electronic products found.</p>
+                    !loading && !error && <p className="text-center text-gray-500">No fashion products found.</p>
                 )}
             </div>
-
-            {}
-            <footer className="text-center text-white py-5 bg-gradient-to-r from-pink-500 to-purple-500 font-semibold tracking-wide shadow-lg">
-                🚀 Cloud Store © 2025 - Stay Techy! 🚀
-            </footer>
         </Layout>
     );
 };

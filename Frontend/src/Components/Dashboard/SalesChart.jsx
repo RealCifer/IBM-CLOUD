@@ -19,7 +19,7 @@ function SalesChart() {
         data={chartdata}
         index="date"
         categories={["Sales", "Stock"]}
-        colors={["#dc7cae", "#6366F1"]}  // Pink and Indigo
+        colors={["#dc7cae", "#6366F1"]}  
         curveType="monotone"
       />
     </Card>

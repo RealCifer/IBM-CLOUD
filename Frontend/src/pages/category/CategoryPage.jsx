@@ -20,7 +20,7 @@ const CategoryPage = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:3000/${categoryname}Products,ElectronicProducts`);
+                const response = await fetch(`http://localhost:3000/${categoryname}`);
                
                 const data = await response.json();
                 setProducts(data);

@@ -23,6 +23,8 @@ import { ProtectedRouteForAdmin } from "./protectedRoute/ProtectedRouteForAdmin"
 import CategoryPage from "./pages/category/CategoryPage";
 import Admin from "./pages/Admin";
 
+import FashionCategoryPage from "./Components/Categoryinside/fashion";
+
 export function App() {
   return (
     <MyState>
@@ -38,7 +40,8 @@ export function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         
-        <Route path="/category/:categoryname" element={<CategoryPage />} />
+        {/* <Route path="/category/:categoryname" element={<CategoryPage />} /> */}
+        <Route path='/category/Fashion' element={<FashionCategoryPage />} />
         <Route path="/user-dashboard" element={
           <ProtectedRouteForUser>
             <UserDashboard/>

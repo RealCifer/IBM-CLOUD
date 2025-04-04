@@ -86,4 +86,6 @@ function ProductsTable() {
   );
 }
 
-export { Navbar, ProductsTable };
+// Exporting Navbar as named export and ProductsTable as default export
+export { Navbar };
+export default ProductsTable;
