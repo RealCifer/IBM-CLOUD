@@ -2,43 +2,124 @@ import React from 'react';
 
 function UserOrdersModal({ user, onClose }) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">Orders for {user.name}</h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            ✕
-          </button>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#ORD-001</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2024-03-10</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$299</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                    Delivered
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <>
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+          }
+
+          .modal-bg {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
+          }
+
+          .modal-container {
+            animation: fadeIn 0.3s ease-out;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+          }
+
+          .close-btn {
+            transition: transform 0.2s ease, color 0.2s ease;
+          }
+
+          .close-btn:hover {
+            transform: rotate(90deg);
+            color: #ff4d4d;
+          }
+
+          .order-table th, .order-table td {
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+          }
+
+          .order-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.2s ease;
+          }
+
+          .status-badge {
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 6px;
+            display: inline-block;
+          }
+
+          .status-delivered { background: #d1fadf; color: #256029; }
+          .status-pending { background: #fff3cd; color: #856404; }
+          .status-cancelled { background: #f8d7da; color: #721c24; }
+        `}
+      </style>
+
+      <div className="fixed inset-0 flex items-center justify-center modal-bg z-50">
+        <div className="modal-container mx-4 p-6">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-white">
+              Orders for <span className="text-blue-300">{user.name}</span>
+            </h3>
+            <button onClick={onClose} className="text-white close-btn text-xl">
+              ✕
+            </button>
+          </div>
+
+          {/* Order Table */}
+          <div className="overflow-x-auto">
+            <table className="order-table w-full text-white">
+              <thead className="border-b border-gray-400">
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#ORD-001</td>
+                  <td>2024-03-10</td>
+                  <td>₹299</td>
+                  <td>
+                    <span className="status-badge status-delivered">
+                      Delivered
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-002</td>
+                  <td>2024-03-15</td>
+                  <td>₹450</td>
+                  <td>
+                    <span className="status-badge status-pending">
+                      Pending
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-003</td>
+                  <td>2024-03-18</td>
+                  <td>₹120</td>
+                  <td>
+                    <span className="status-badge status-cancelled">
+                      Cancelled
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

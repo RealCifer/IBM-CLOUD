@@ -6,90 +6,47 @@ const UserDetail = () => {
     const context = useMyStore();
 
     const { getAllUser } = context;
+
     return (
-        <div>
-            <div>
-                <div className="py-5 flex justify-between items-center">
-                    {}
-                    <h1 className=" text-xl text-pink-300 font-bold">All User</h1>
-                </div>
+        <div className="min-h-screen bg-gray-900 p-6">
+            <div className="py-5 flex justify-between items-center">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text">
+                    All Users
+                </h1>
+            </div>
 
-                {}
-                <div className="w-full overflow-x-auto">
-                    <table className="w-full text-left border border-collapse sm:border-separate border-pink-100 text-pink-400" >
-                        <tbody>
-                            <tr>
-                                <th scope="col"
-                                    className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                    S.No.
-                                </th>
+            <div className="w-full overflow-x-auto">
+                <table className="w-full text-left border border-collapse sm:border-separate border-gray-700 text-gray-300 shadow-lg rounded-lg">
+                    <thead>
+                        <tr className="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
+                            <th className="h-12 px-6 border-l border-gray-700 first:border-l-0 font-bold">S.No.</th>
+                            <th className="h-12 px-6 border-l border-gray-700 first:border-l-0 font-bold">Name</th>
+                            <th className="h-12 px-6 border-l border-gray-700 first:border-l-0 font-bold">Email</th>
+                            <th className="h-12 px-6 border-l border-gray-700 first:border-l-0 font-bold">Uid</th>
+                            <th className="h-12 px-6 border-l border-gray-700 first:border-l-0 font-bold">Role</th>
+                            <th className="h-12 px-6 border-l border-gray-700 first:border-l-0 font-bold">Date</th>
+                        </tr>
+                    </thead>
 
-                                <th scope="col"
-                                    className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                    Name
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                    Email
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                    Uid
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                   Role
-                                </th>
-
-                                <th scope="col"
-                                    className="h-12 px-6 text-md border-l first:border-l-0 border-pink-100 text-slate-700 bg-slate-100 font-bold fontPara">
-                                    Date
-                                </th>
-
+                    <tbody>
+                        {getAllUser.map((value, index) => (
+                            <tr
+                                key={index}
+                                className="transition-all duration-300 bg-gray-800 hover:bg-gray-700 hover:shadow-lg hover:shadow-pink-500/50"
+                            >
+                                <td className="h-12 px-6 border-t border-gray-700">{index + 1}</td>
+                                <td className="h-12 px-6 border-t border-gray-700 first-letter:uppercase">{value.name}</td>
+                                <td className="h-12 px-6 border-t border-gray-700 cursor-pointer">{value.email}</td>
+                                <td className="h-12 px-6 border-t border-gray-700 cursor-pointer">{value.uid}</td>
+                                <td className="h-12 px-6 border-t border-gray-700 cursor-pointer">{value.role}</td>
+                                <td className="h-12 px-6 border-t border-gray-700 cursor-pointer">{value.date}</td>
                             </tr>
-                            {
-                                getAllUser.map((value, index) => {
-                                    return (
-                                        <tr key={index} className="text-pink-300">
-                                            <td
-                                                className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 ">
-                                                {index + 1}
-                                            </td>
-
-                                            <td
-                                                className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 first-letter:uppercase ">
-                                                {value.name}
-                                            </td>
-
-                                            <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 cursor-pointer ">
-                                                {value.email}
-                                            </td>
-
-                                            <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500  cursor-pointer ">
-                                                {value.uid}
-                                            </td>
-
-                                            <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500  cursor-pointer ">
-                                                {value.role}
-                                            </td>
-
-                                            <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-500 cursor-pointer ">
-                                                {value.date}
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
-}
+};
 
 export default UserDetail;

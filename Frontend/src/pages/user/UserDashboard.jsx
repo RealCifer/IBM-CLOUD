@@ -52,7 +52,7 @@ const UserDashboard = () => {
 
                         {/* Orders List */}
                         {getAllOrder && getAllOrder.length > 0 ? (
-                            getAllOrder.filter(order => order.userid === user?.uid).map((order, index) => (
+                            getAllOrder.filter(order => order.userid === user?.uid)?.map((order, index) => (
                                 <div key={index} className="mt-5 flex flex-col overflow-hidden rounded-xl border border-pink-100 md:flex-row">
                                     {/* Order Info */}
                                     <div className="w-full border-r border-pink-100 bg-pink-50 md:max-w-xs p-8">
@@ -67,7 +67,7 @@ const UserDashboard = () => {
                                             </div>
                                             <div className="mb-4">
                                                 <div className="text-sm font-semibold">Total Amount</div>
-                                                <div className="text-sm font-medium text-gray-900">₹ {order.cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</div>
+                                                <div className="text-sm font-medium text-gray-900">₹ {order.cartItems?.reduce((total, item) => total + item.price * item.quantity, 0)}</div>
                                             </div>
                                             <div className="mb-4">
                                                 <div className="text-sm font-semibold">Order Status</div>
@@ -79,7 +79,7 @@ const UserDashboard = () => {
                                     {/* Ordered Items */}
                                     <div className="flex-1 p-8">
                                         <ul className="-my-7 divide-y divide-gray-200">
-                                            {order.cartItems.map((item, index) => (
+                                            {order.cartItems?.map((item, index) => (
                                                 <li key={index} className="flex flex-col justify-between space-x-5 py-7 md:flex-row">
                                                     <div className="flex flex-1 items-stretch">
                                                         <div className="flex-shrink-0">
